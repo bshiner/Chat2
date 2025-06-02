@@ -95,8 +95,8 @@
             $feedbackContainer.append($thumbsUp).append($thumbsDown);
             $messageFooter.append($feedbackContainer);
 
-            $thumbsUp.on('click', function() { submitFeedback(1, $message); });
-            $thumbsDown.on('click', function() { submitFeedback(-1, $message); });
+            $thumbsUp.on('click', function() { submitFeedback('up', $message); });
+            $thumbsDown.on('click', function() { submitFeedback('down', $message); });
           }
 
           $message.append($messageContent).append($messageFooter);
@@ -106,16 +106,13 @@
 
         function submitFeedback(rating, $messageElement) {
           $.ajax({
-            url: feedbackUri,
+            url: '/chatbot-widget/feedback',
             method: 'POST',
             data: JSON.stringify({
               sessionId: sessionId,
               rating: rating
             }),
             contentType: 'application/json',
-            headers: {
-              'X-User-Email': userEmail
-            },
             success: function(response) {
               console.log('Feedback submitted successfully');
               $messageElement.find('.feedback-container').html('Thank you for your feedback!');

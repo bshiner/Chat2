@@ -52,6 +52,43 @@ class ChatbotWidgetController extends ControllerBase {
     }
   }
 
+  public function handleFeedback(Request $request) {
+    $config = $this->config('chatbot_widget.settings');
+    $apiEndpoint = $config->get('feedback_uri');
+    $apiKey = $config->get('api_key');
+
+    $content = json_decode($request->getContent(), true);
+    //$sessionId = $content['sessionId'] ?? '';
+    $sessionId = '12345';
+    $rating = $content['rating'] ?? 'up';
+    $email_field = $config->get('user_email_field') ?: 'field_public_email';
+    $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
+
+    $client = \Drupal::httpClient();
+
+    try {
+      $response = $client->post($apiEndpoint . '/feedback', [
+        'json' => [
+          'sessionId' => $sessionId,
+          'rating' => $rating,
+        ],
+        'headers' => [
+//          'X-API-Key' => $apiKey,
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+          'X-User-Email' => $userEmail,
+        ],
+      ]);
+
+      $body = json_decode($response->getBody(), true);
+      return new JsonResponse(['message' => 'Feedback submitted successfully']);
+    }
+    catch (RequestException $e) {
+      \Drupal::logger('chatbot_widget')->error('Feedback API request failed: @error', ['@error' => $e->getMessage()]);
+      return new JsonResponse(['error' => 'An error occurred while submitting feedback.'], 500);
+    }
+  }
+
   private function formatMessage($message) {
     // Split the message into lines
     $lines = explode("\n", $message);

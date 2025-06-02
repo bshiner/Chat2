@@ -13,3 +13,11 @@ chatbot_widget.api:
   requirements:
     _permission: 'access content'
   methods: [POST]
+
+chatbot_widget.feedback:
+  path: '/chatbot-widget/feedback'
+  defaults:
+    _controller: '\Drupal\chatbot_widget\Controller\ChatbotWidgetController::handleFeedback'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
