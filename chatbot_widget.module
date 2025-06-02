@@ -44,5 +44,6 @@ function chatbot_widget_page_attachments(array &$attachments) {
     'chatbotTitle' => $config->get('chatbot_title') ?: 'Chatbot',
     'chatbotWidth' => $config->get('chatbot_width') ?: 950,
     'chatbotHeight' => $config->get('chatbot_height') ?: 500,
+    'feedbackUri' => $config->get('feedback_uri') ?: '/api/chatbot/feedback',
   ];
 }

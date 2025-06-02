@@ -70,6 +70,14 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#max' => 800,
     ];
 
+    $form['feedback_uri'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Feedback URI'),
+      '#description' => $this->t('Enter the URI for submitting feedback.'),
+      '#default_value' => $config->get('feedback_uri') ?: '/api/chatbot/feedback',
+      '#required' => TRUE,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -81,6 +89,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       ->set('chatbot_title', $form_state->getValue('chatbot_title'))
       ->set('chatbot_width', $form_state->getValue('chatbot_width'))
       ->set('chatbot_height', $form_state->getValue('chatbot_height'))
+      ->set('feedback_uri', $form_state->getValue('feedback_uri'))
       ->save();
 
     parent::submitForm($form, $form_state);

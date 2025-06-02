@@ -21,6 +21,8 @@
         // Get the API endpoint and user email from Drupal settings
         const apiEndpoint = settings.chatbotWidget.apiEndpoint || '/api/chatbot';
         const userEmail = settings.chatbotWidget.userEmail || '';
+        const feedbackUri = settings.chatbotWidget.feedbackUri || '/api/chatbot/feedback';
+        let sessionId = generateSessionId();
 
         // Toggle chat container visibility
         $button.on('click', function () {
@@ -83,14 +85,47 @@
           const $messageTimestamp = $('<div>').addClass('message-timestamp').text(timestamp);
           
           $message.append($messageContent).append($messageTimestamp);
+
+          if (sender === 'bot') {
+            const $feedbackContainer = $('<div>').addClass('feedback-container');
+            const $thumbsUp = $('<span>').addClass('feedback-icon thumbs-up').html('👍');
+            const $thumbsDown = $('<span>').addClass('feedback-icon thumbs-down').html('👎');
+
+            $feedbackContainer.append($thumbsUp).append($thumbsDown);
+            $message.append($feedbackContainer);
+
+            $thumbsUp.on('click', function() { submitFeedback(1, $message); });
+            $thumbsDown.on('click', function() { submitFeedback(-1, $message); });
+          }
+
           $messages.append($message);
           $messages.scrollTop($messages[0].scrollHeight);
         }
 
+        function submitFeedback(rating, $messageElement) {
+          $.ajax({
+            url: feedbackUri,
+            method: 'POST',
+            data: JSON.stringify({
+              sessionId: sessionId,
+              rating: rating
+            }),
+            contentType: 'application/json',
+            headers: {
+              'X-User-Email': userEmail
+            },
+            success: function(response) {
+              console.log('Feedback submitted successfully');
+              $messageElement.find('.feedback-container').html('Thank you for your feedback!');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.error('Error submitting feedback:', textStatus, errorThrown);
+            }
+          });
+        }
+
         // Helper function to generate a session ID
         function generateSessionId() {
-          // This is a simple implementation. You might want to use a more robust method
-          // or retrieve an existing session ID from cookies or local storage
           return 'session_' + Math.random().toString(36).substr(2, 9);
         }
       });
