@@ -33,5 +33,15 @@ function chatbot_widget_theme($existing, $type, $theme, $path) {
  */
 function chatbot_widget_page_attachments(array &$attachments) {
   $config = \Drupal::config('chatbot_widget.settings');
-  $attachments['#attached']['drupalSettings']['chatbotWidget']['apiEndpoint'] = $config->get('api_endpoint') ?: '/api/chatbot';
+  $current_user = \Drupal::currentUser();
+  $user = \Drupal\user\Entity\User::load($current_user->id());
+  
+  $email_field = $config->get('user_email_field') ?: 'field_public_email';
+  $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
+
+  $attachments['#attached']['drupalSettings']['chatbotWidget'] = [
+    'apiEndpoint' => $config->get('api_endpoint') ?: '/api/chatbot',
+    'apiKey' => $config->get('api_key') ?: 'default-api-key',
+    'userEmail' => $user_email,
+  ];
 }
