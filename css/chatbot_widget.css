@@ -1,7 +1,7 @@
 .chatbot-widget {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 90px;
+  right: 30px;
   z-index: 1000;
 }
 
@@ -26,8 +26,8 @@
   position: absolute;
   bottom: 80px;
   right: 0;
-  width: 700px;
-  height: 450px;
+  width: 950px;
+  height: 500px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: white;
