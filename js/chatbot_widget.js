@@ -9,6 +9,14 @@
         const $input = $('#chatbot-input-field', $widget);
         const $sendButton = $('#chatbot-send-button', $widget);
         const $messages = $('.chatbot-messages', $widget);
+        const $header = $('.chatbot-header h3', $widget);
+
+        // Apply configurations
+        $container.css({
+          width: settings.chatbotWidget.chatbotWidth + 'px',
+          height: settings.chatbotWidget.chatbotHeight + 'px'
+        });
+        $header.text(settings.chatbotWidget.chatbotTitle);
 
         // Get the API endpoint and user email from Drupal settings
         const apiEndpoint = settings.chatbotWidget.apiEndpoint || '/api/chatbot';

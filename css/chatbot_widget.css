@@ -1,4 +1,6 @@
 .chatbot-widget {
+  --chatbot-width: 950px;
+  --chatbot-height: 500px;
   position: fixed;
   bottom: 90px;
   right: 30px;
@@ -26,8 +28,8 @@
   position: absolute;
   bottom: 80px;
   right: 0;
-  width: 950px;
-  height: 500px;
+  width: var(--chatbot-width);
+  height: var(--chatbot-height);
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: white;

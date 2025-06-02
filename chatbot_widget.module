@@ -41,5 +41,8 @@ function chatbot_widget_page_attachments(array &$attachments) {
 
   $attachments['#attached']['drupalSettings']['chatbotWidget'] = [
     'userEmail' => $user_email,
+    'chatbotTitle' => $config->get('chatbot_title') ?: 'Chatbot',
+    'chatbotWidth' => $config->get('chatbot_width') ?: 950,
+    'chatbotHeight' => $config->get('chatbot_height') ?: 500,
   ];
 }
