@@ -1,0 +1,10 @@
+chatbot_widget:
+  version: 1.x
+  css:
+    theme:
+      css/chatbot_widget.css: {}
+  js:
+    js/chatbot_widget.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

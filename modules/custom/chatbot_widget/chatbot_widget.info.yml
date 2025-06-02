@@ -1,0 +1,7 @@
+name: Chatbot Widget
+type: module
+description: 'Provides a web-based chat widget for Drupal 10 sites.'
+package: Custom
+core_version_requirement: ^10
+dependencies:
+  - drupal:block

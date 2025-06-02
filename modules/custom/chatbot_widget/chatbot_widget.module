@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Chatbot Widget module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function chatbot_widget_theme($existing, $type, $theme, $path) {
+  return [
+    'chatbot_widget' => [
+      'variables' => [],
+    ],
+  ];
+}
