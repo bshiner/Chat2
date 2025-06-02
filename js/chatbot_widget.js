@@ -82,22 +82,24 @@
             $messageContent.text(text);
           }
           
-          const $messageTimestamp = $('<div>').addClass('message-timestamp').text(timestamp);
+          const $messageFooter = $('<div>').addClass('message-footer');
+          const $messageTimestamp = $('<span>').addClass('message-timestamp').text(timestamp);
           
-          $message.append($messageContent).append($messageTimestamp);
+          $messageFooter.append($messageTimestamp);
 
           if (sender === 'bot') {
-            const $feedbackContainer = $('<div>').addClass('feedback-container');
+            const $feedbackContainer = $('<span>').addClass('feedback-container');
             const $thumbsUp = $('<span>').addClass('feedback-icon thumbs-up').html('👍');
             const $thumbsDown = $('<span>').addClass('feedback-icon thumbs-down').html('👎');
 
             $feedbackContainer.append($thumbsUp).append($thumbsDown);
-            $message.append($feedbackContainer);
+            $messageFooter.append($feedbackContainer);
 
             $thumbsUp.on('click', function() { submitFeedback(1, $message); });
             $thumbsDown.on('click', function() { submitFeedback(-1, $message); });
           }
 
+          $message.append($messageContent).append($messageFooter);
           $messages.append($message);
           $messages.scrollTop($messages[0].scrollHeight);
         }
