@@ -1,0 +1,7 @@
+chatbot_widget.settings:
+  path: '/admin/config/services/chatbot-widget'
+  defaults:
+    _form: '\Drupal\chatbot_widget\Form\ChatbotWidgetSettingsForm'
+    _title: 'Chatbot Widget Settings'
+  requirements:
+    _permission: 'administer site configuration'

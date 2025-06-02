@@ -10,6 +10,9 @@
         const $sendButton = $('#chatbot-send-button', $widget);
         const $messages = $('.chatbot-messages', $widget);
 
+        // Get the API endpoint from Drupal settings
+        const apiEndpoint = settings.chatbotWidget.apiEndpoint || '/api/chatbot';
+
         // Toggle chat container visibility
         $button.on('click', function () {
           $container.toggle();
@@ -20,17 +23,25 @@
           $container.hide();
         });
 
-        // Send message
         function sendMessage() {
           const message = $input.val().trim();
           if (message) {
             addMessage('user', message);
             $input.val('');
-            // TODO: Send message to API endpoint
-            // For now, we'll just simulate a response
-            setTimeout(() => {
-              addMessage('bot', 'Thank you for your message. This is a placeholder response.');
-            }, 1000);
+            
+            // Send message to API endpoint
+            $.ajax({
+              url: apiEndpoint,
+              method: 'POST',
+              data: JSON.stringify({ message: message }),
+              contentType: 'application/json',
+              success: function(response) {
+                addMessage('bot', response.message);
+              },
+              error: function() {
+                addMessage('bot', 'Sorry, there was an error processing your message.');
+              }
+            });
           }
         }
 

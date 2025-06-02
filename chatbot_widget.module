@@ -5,6 +5,18 @@
  * Primary module hooks for Chatbot Widget module.
  */
 
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function chatbot_widget_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.chatbot_widget':
+      return '<p>' . t('Provides a web-based chat widget for Drupal 10 sites.') . '</p>';
+  }
+}
+
 /**
  * Implements hook_theme().
  */
@@ -14,4 +26,12 @@ function chatbot_widget_theme($existing, $type, $theme, $path) {
       'variables' => [],
     ],
   ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function chatbot_widget_page_attachments(array &$attachments) {
+  $config = \Drupal::config('chatbot_widget.settings');
+  $attachments['#attached']['drupalSettings']['chatbotWidget']['apiEndpoint'] = $config->get('api_endpoint') ?: '/api/chatbot';
 }
