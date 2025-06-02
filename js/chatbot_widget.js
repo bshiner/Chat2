@@ -40,6 +40,9 @@
             addMessage('user', message);
             $input.val('');
             
+            // Show loading indicator
+            showLoadingIndicator();
+
             // Prepare the payload
             const payload = {
               message: message
@@ -52,10 +55,14 @@
               data: JSON.stringify(payload),
               contentType: 'application/json',
               success: function(response) {
+                // Hide loading indicator
+                hideLoadingIndicator();
                 addMessage('bot', response.message, true);
               },
               error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Error:', textStatus, errorThrown);
+                // Hide loading indicator
+                hideLoadingIndicator();
                 addMessage('bot', 'Sorry, there was an error processing your message.');
               }
             });
@@ -126,6 +133,16 @@
         // Helper function to generate a session ID
         function generateSessionId() {
           return 'session_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function showLoadingIndicator() {
+          const $loadingIndicator = $('<div class="loading-indicator"><div class="spinner"></div></div>');
+          $messages.append($loadingIndicator);
+          $messages.scrollTop($messages[0].scrollHeight);
+        }
+
+        function hideLoadingIndicator() {
+          $('.loading-indicator', $messages).remove();
         }
       });
     }
