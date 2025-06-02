@@ -42,7 +42,7 @@
               data: JSON.stringify(payload),
               contentType: 'application/json',
               success: function(response) {
-                addMessage('bot', response.message);
+                addMessage('bot', response.response);
               },
               error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Error:', textStatus, errorThrown);
