@@ -83,3 +83,39 @@
   padding: 5px 10px;
   cursor: pointer;
 }
+
+.message {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-message {
+  align-items: flex-end;
+}
+
+.bot-message {
+  align-items: flex-start;
+}
+
+.message-content {
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+}
+
+.user-message .message-content {
+  background-color: #007bff;
+  color: white;
+}
+
+.bot-message .message-content {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.message-timestamp {
+  font-size: 0.8em;
+  color: #888;
+  margin-top: 2px;
+}
