@@ -79,6 +79,6 @@ class ChatbotWidgetController extends ControllerBase {
       $formattedLines[] = '</ul>';
     }
 
-    return implode('<br>', $formattedLines);
+    return implode($formattedLines);
   }
 }
