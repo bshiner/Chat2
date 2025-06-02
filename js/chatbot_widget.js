@@ -42,7 +42,7 @@
               data: JSON.stringify(payload),
               contentType: 'application/json',
               success: function(response) {
-                addMessage('bot', response.message);
+                addMessage('bot', response.message, true);
               },
               error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Error:', textStatus, errorThrown);
@@ -61,10 +61,17 @@
         });
 
         // Add message to chat
-        function addMessage(sender, text) {
+        function addMessage(sender, text, isHtml = false) {
           const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           const $message = $('<div>').addClass(`message ${sender}-message`);
-          const $messageContent = $('<div>').addClass('message-content').text(text);
+          const $messageContent = $('<div>').addClass('message-content');
+          
+          if (isHtml) {
+            $messageContent.html(text);
+          } else {
+            $messageContent.text(text);
+          }
+          
           const $messageTimestamp = $('<div>').addClass('message-timestamp').text(timestamp);
           
           $message.append($messageContent).append($messageTimestamp);

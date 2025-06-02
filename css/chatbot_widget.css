@@ -112,10 +112,20 @@
 .bot-message .message-content {
   background-color: #f1f1f1;
   color: black;
+  padding: 10px 15px;
 }
 
 .message-timestamp {
   font-size: 0.8em;
   color: #888;
   margin-top: 2px;
+}
+
+.message-content ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.message-content li {
+  margin-bottom: 5px;
 }
