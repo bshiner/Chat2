@@ -36,8 +36,7 @@
               timestamp: new Date().toISOString(),
               user_id: 'anonymous', // You might want to replace this with an actual user ID if available
               sessionId: generateSessionId(),
-              language: navigator.language || navigator.userLanguage,
-              'X-User-Email': userEmail
+              language: navigator.language || navigator.userLanguage
             };
 
             // Send message to API endpoint
@@ -48,7 +47,8 @@
               contentType: 'application/json',
               headers: {
                 'X-API-Key': settings.chatbotWidget.apiKey || 'default-api-key',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'X-User-Email': userEmail
               },
               success: function(response) {
                 addMessage('bot', response.message);
