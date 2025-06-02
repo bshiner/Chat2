@@ -40,12 +40,45 @@ class ChatbotWidgetController extends ControllerBase {
         ],
       ]);
 
-      $body = json_decode($response->getBody(), true);
-      return new JsonResponse($body);
+      $body = json_decode($response->getBody(), true);      
+      // Format the message
+      $formattedMessage = $this->formatMessage($body['response']);
+
+      return new JsonResponse(['message' => $formattedMessage]);
     }
     catch (RequestException $e) {
       \Drupal::logger('chatbot_widget')->error('API request failed: @error', ['@error' => $e->getMessage()]);
       return new JsonResponse(['error' => 'An error occurred while processing your request.'], 500);
     }
+  }
+
+  private function formatMessage($message) {
+    // Split the message into lines
+    $lines = explode("\n", $message);
+    $formattedLines = [];
+    $inList = false;
+
+    foreach ($lines as $line) {
+      $trimmedLine = trim($line);
+      if (strpos($trimmedLine, '- ') === 0) {
+        if (!$inList) {
+          $formattedLines[] = '<ul>';
+          $inList = true;
+        }
+        $formattedLines[] = '<li>' . htmlspecialchars(substr($trimmedLine, 2)) . '</li>';
+      } else {
+        if ($inList) {
+          $formattedLines[] = '</ul>';
+          $inList = false;
+        }
+        $formattedLines[] = htmlspecialchars($trimmedLine);
+      }
+    }
+
+    if ($inList) {
+      $formattedLines[] = '</ul>';
+    }
+
+    return implode('<br>', $formattedLines);
   }
 }
