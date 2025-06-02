@@ -44,9 +44,12 @@
 
         // Add message to chat
         function addMessage(sender, text) {
-          const $message = $('<div>')
-            .addClass(`message ${sender}-message`)
-            .text(text);
+          const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          const $message = $('<div>').addClass(`message ${sender}-message`);
+          const $messageContent = $('<div>').addClass('message-content').text(text);
+          const $messageTimestamp = $('<div>').addClass('message-timestamp').text(timestamp);
+          
+          $message.append($messageContent).append($messageTimestamp);
           $messages.append($message);
           $messages.scrollTop($messages[0].scrollHeight);
         }
