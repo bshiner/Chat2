@@ -32,24 +32,15 @@
             
             // Prepare the payload
             const payload = {
-              prompt: message,
-              //timestamp: new Date().toISOString(),
-              //user_id: 'anonymous', // You might want to replace this with an actual user ID if available
-              sessionId: generateSessionId()
-              //language: navigator.language || navigator.userLanguage
+              message: message
             };
 
-            // Send message to API endpoint
+            // Send message to our module's endpoint
             $.ajax({
-              url: apiEndpoint,
+              url: '/chatbot-widget/api',
               method: 'POST',
               data: JSON.stringify(payload),
               contentType: 'application/json',
-              headers: {
-                //'X-API-Key': settings.chatbotWidget.apiKey || 'default-api-key',
-                //'Accept': 'application/json',
-                'X-User-Email': userEmail
-              },
               success: function(response) {
                 addMessage('bot', response.message);
               },

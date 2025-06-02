@@ -5,3 +5,11 @@ chatbot_widget.settings:
     _title: 'Chatbot Widget Settings'
   requirements:
     _permission: 'administer site configuration'
+
+chatbot_widget.api:
+  path: '/chatbot-widget/api'
+  defaults:
+    _controller: '\Drupal\chatbot_widget\Controller\ChatbotWidgetController::handleRequest'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]

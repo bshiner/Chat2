@@ -40,8 +40,6 @@ function chatbot_widget_page_attachments(array &$attachments) {
   $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
 
   $attachments['#attached']['drupalSettings']['chatbotWidget'] = [
-    'apiEndpoint' => $config->get('api_endpoint') ?: '/api/chatbot',
-    'apiKey' => $config->get('api_key') ?: 'default-api-key',
     'userEmail' => $user_email,
   ];
 }
