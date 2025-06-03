@@ -144,6 +144,15 @@
         function hideLoadingIndicator() {
           $('.loading-indicator', $messages).remove();
         }
+
+        // Add initial disclaimer message
+        function addDisclaimerMessage() {
+          const disclaimerText = settings.chatbotWidget.disclaimerText || 'Welcome! This is an AI-powered chatbot. While it strives to provide helpful information, please note that its responses may not always be accurate or complete. For critical matters, consult with appropriate professionals.';
+          addMessage('bot', disclaimerText, false);
+        }
+
+        // Call the function to add the disclaimer message
+        addDisclaimerMessage();
       });
     }
   };

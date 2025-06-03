@@ -78,6 +78,13 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
     ];
 
+    $form['disclaimer_text'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Disclaimer Text'),
+      '#default_value' => $config->get('disclaimer_text'),
+      '#description' => $this->t('Enter the disclaimer text to be shown at the start of each chat session.'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -90,6 +97,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       ->set('chatbot_width', $form_state->getValue('chatbot_width'))
       ->set('chatbot_height', $form_state->getValue('chatbot_height'))
       ->set('feedback_uri', $form_state->getValue('feedback_uri'))
+      ->set('disclaimer_text', $form_state->getValue('disclaimer_text'))
       ->save();
 
     parent::submitForm($form, $form_state);
