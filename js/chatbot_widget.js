@@ -57,7 +57,7 @@
               success: function(response) {
                 // Hide loading indicator
                 hideLoadingIndicator();
-                addMessage('bot', response.message, true);
+                addMessage('bot', response.message, true, response.citations);
               },
               error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Error:', textStatus, errorThrown);
@@ -78,7 +78,7 @@
         });
 
         // Add message to chat
-        function addMessage(sender, text, isHtml = false) {
+        function addMessage(sender, text, isHtml = false, citations = []) {
           const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           const $message = $('<div>').addClass(`message ${sender}-message`);
           const $messageContent = $('<div>').addClass('message-content');
@@ -104,6 +104,26 @@
 
             $thumbsUp.on('click', function() { submitFeedback('up', $message); });
             $thumbsDown.on('click', function() { submitFeedback('down', $message); });
+
+            if (citations.length > 0) {
+              const $citationsContainer = $('<div>').addClass('citations-container');
+              const $citationsToggle = $('<span>').addClass('citations-toggle').text('Show Citations');
+              const $citationsList = $('<ol>').addClass('citations-list').hide();
+
+              citations.forEach(function(citation) {
+                $citationsList.append($('<li>').text(citation.text));
+              });
+
+              $citationsToggle.on('click', function() {
+                $citationsList.toggle();
+                $(this).text(function(i, text) {
+                  return text === "Show Citations" ? "Hide Citations" : "Show Citations";
+                });
+              });
+
+              $citationsContainer.append($citationsToggle).append($citationsList);
+              $messageFooter.append($citationsContainer);
+            }
           }
 
           $message.append($messageContent).append($messageFooter);

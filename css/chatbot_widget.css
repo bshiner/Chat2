@@ -190,3 +190,29 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.citations-container {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.citations-toggle {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.citations-list {
+  margin-top: 5px;
+  padding-left: 20px;
+}
+
+.citations-list li {
+  margin-bottom: 5px;
+}
+
+sup {
+  color: #007bff;
+  font-weight: bold;
+  cursor: pointer;
+}

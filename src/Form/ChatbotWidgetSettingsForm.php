@@ -37,7 +37,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
     $form['user_email_field'] = [
       '#type' => 'textfield',
       '#title' => $this->t('User Email Field'),
-      '#description' => $this->t('Enter the machine name of the field containing the user\'s public email (e.g., field_public_email).'),
+      '#description' => $this->t('Enter the machine name of the field containing the public email (e.g., field_public_email).'),
       '#default_value' => $config->get('user_email_field') ?: 'field_public_email',
       '#required' => TRUE,
     ];

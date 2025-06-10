@@ -21,7 +21,6 @@ class ChatbotWidgetController extends ControllerBase {
 
     $content = json_decode($request->getContent(), true);
     $message = $content['message'] ?? '';
-//    $userEmail = $content['X-User-Email'] ?? '';
 
     $client = \Drupal::httpClient();
 
@@ -43,8 +42,14 @@ class ChatbotWidgetController extends ControllerBase {
       $body = json_decode($response->getBody(), true);      
       // Format the message
       $formattedMessage = $this->formatMessage($body['response']);
+    
+    // Extract citations from the API response
+    $citations = $body['citations'] ?? [];
 
-      return new JsonResponse(['message' => $formattedMessage]);
+    return new JsonResponse([
+      'message' => $formattedMessage,
+      'citations' => $citations,
+    ]);
     }
     catch (RequestException $e) {
       \Drupal::logger('chatbot_widget')->error('API request failed: @error', ['@error' => $e->getMessage()]);
