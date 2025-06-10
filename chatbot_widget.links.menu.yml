@@ -1,0 +1,6 @@
+chatbot_widget.admin_settings:
+  title: 'Chatbot Widget'
+  description: 'Configure settings for the Chatbot Widget.'
+  parent: system.admin_config_services
+  route_name: chatbot_widget.settings
+  weight: 100
