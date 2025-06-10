@@ -85,6 +85,13 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Enter the disclaimer text to be shown at the start of each chat session.'),
     ];
 
+    $form['enable_logging'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable logging'),
+      '#description' => $this->t('Log all messages sent to and received from the chatbot API.'),
+      '#default_value' => $config->get('enable_logging'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -98,6 +105,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       ->set('chatbot_height', $form_state->getValue('chatbot_height'))
       ->set('feedback_uri', $form_state->getValue('feedback_uri'))
       ->set('disclaimer_text', $form_state->getValue('disclaimer_text'))
+      ->set('enable_logging', $form_state->getValue('enable_logging'))
       ->save();
 
     parent::submitForm($form, $form_state);

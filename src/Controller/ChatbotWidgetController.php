@@ -7,8 +7,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ChatbotWidgetController extends ControllerBase {
+class ChatbotWidgetController extends ControllerBase implements ContainerInjectionInterface {
+
+  protected $loggerFactory;
+
+  public function __construct(LoggerChannelFactoryInterface $logger_factory) {
+    $this->loggerFactory = $logger_factory;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('logger.factory')
+    );
+  }
 
   public function handleRequest(Request $request) {
     $config = $this->config('chatbot_widget.settings');
@@ -21,6 +36,10 @@ class ChatbotWidgetController extends ControllerBase {
 
     $content = json_decode($request->getContent(), true);
     $message = $content['message'] ?? '';
+
+    if ($config->get('enable_logging')) {
+      $this->loggerFactory->get('chatbot_widget')->info('Request to API: @request', ['@request' => json_encode($content)]);
+    }
 
     $client = \Drupal::httpClient();
 
@@ -40,6 +59,11 @@ class ChatbotWidgetController extends ControllerBase {
       ]);
 
       $body = json_decode($response->getBody(), true);      
+
+      if ($config->get('enable_logging')) {
+        $this->loggerFactory->get('chatbot_widget')->info('Response from API: @response', ['@response' => json_encode($body)]);
+      }
+
       // Format the message
       $formattedMessage = $this->formatMessage($body['response']);
     
@@ -63,10 +87,13 @@ class ChatbotWidgetController extends ControllerBase {
     $apiKey = $config->get('api_key');
 
     $content = json_decode($request->getContent(), true);
-    //$sessionId = $content['sessionId'] ?? '';
-    $sessionId = '12345';
-    $rating = $content['rating'] ?? 'up';
+
+    if ($config->get('enable_logging')) {
+      $this->loggerFactory->get('chatbot_widget')->info('Feedback request: @request', ['@request' => json_encode($content)]);
+    }
+
     $email_field = $config->get('user_email_field') ?: 'field_public_email';
+    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
     $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
 
     $client = \Drupal::httpClient();
@@ -74,18 +101,23 @@ class ChatbotWidgetController extends ControllerBase {
     try {
       $response = $client->post($apiEndpoint . '/feedback', [
         'json' => [
-          'sessionId' => $sessionId,
-          'rating' => $rating,
+          'sessionId' => '12345',
+          'rating' => $content['rating'] ?? 'up',
         ],
         'headers' => [
-//          'X-API-Key' => $apiKey,
+          'X-API-Key' => $apiKey,
           'Content-Type' => 'application/json',
           'Accept' => 'application/json',
-          'X-User-Email' => $userEmail,
+          'X-User-Email' => $user_email,
         ],
       ]);
 
       $body = json_decode($response->getBody(), true);
+
+      if ($config->get('enable_logging')) {
+        $this->loggerFactory->get('chatbot_widget')->info('Feedback response: @response', ['@response' => json_encode($body)]);
+      }
+
       return new JsonResponse(['message' => 'Feedback submitted successfully']);
     }
     catch (RequestException $e) {
