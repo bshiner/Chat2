@@ -3,6 +3,9 @@
 namespace Drupal\chatbot_widget\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
  * Provides a Chatbot Widget Block.
@@ -12,7 +15,44 @@ use Drupal\Core\Block\BlockBase;
  *   admin_label = @Translation("Chatbot Widget"),
  * )
  */
-class ChatbotWidgetBlock extends BlockBase {
+class ChatbotWidgetBlock extends BlockBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * Constructs a new ChatbotWidgetBlock instance.
+   *
+   * @param array $configuration
+   *   The plugin configuration, i.e. an array with configuration values keyed
+   *   by configuration option name.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->configFactory = $config_factory;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('config.factory')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -27,7 +67,11 @@ class ChatbotWidgetBlock extends BlockBase {
         ],
         'drupalSettings' => [
           'chatbotWidget' => [
-            // ... other settings ...
+            'chatbotWidth' => $config->get('chatbot_width'),
+            'chatbotHeight' => $config->get('chatbot_height'),
+            'chatbotTitle' => $config->get('chatbot_title'),
+            'apiEndpoint' => $config->get('api_endpoint'),
+            'feedbackUri' => $config->get('feedback_uri'),
             'disclaimerText' => $config->get('disclaimer_text') ?: 'Welcome! This is an AI-powered chatbot. While it strives to provide helpful information, please note that its responses may not always be accurate or complete. For critical matters, consult with appropriate professionals.',
           ],
         ],
