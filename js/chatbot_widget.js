@@ -93,15 +93,15 @@
 
           if (citations.length > 0) {
             const $citationsContainer = $('<div>').addClass('citations-container');
-            const $citationsList = $('<ol>').addClass('citations-list');
+            const $citationsList = $('<ul>').addClass('citations-list');
 
+            $citationsContainer.append($('<h4>').text('Citations:'));
             citations.forEach(function(citation) {
               $citationsList.append($('<li>').text(citation.text));
             });
 
-            $citationsContainer.append($('<h4>').text('Citations:'));
             $citationsContainer.append($citationsList);
-            $message.append($citationsContainer);
+            $messageContent.append($citationsContainer);
           }
 
           const $messageFooter = $('<div>').addClass('message-footer');

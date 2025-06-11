@@ -105,6 +105,8 @@
   padding: 8px 12px;
   border-radius: 12px;
   max-width: 95%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .user-message .message-content {
@@ -194,20 +196,25 @@
 .citations-container {
   margin-top: 10px;
   font-size: 0.9em;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
 }
 
 .citations-container h4 {
   margin: 0 0 5px 0;
   font-size: 1em;
+  color: #555;
 }
 
 .citations-list {
   margin: 0;
   padding-left: 20px;
+  list-style-type: decimal;
 }
 
 .citations-list li {
   margin-bottom: 5px;
+  color: #666;
 }
 
 sup {
