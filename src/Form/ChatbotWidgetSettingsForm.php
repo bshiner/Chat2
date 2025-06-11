@@ -22,7 +22,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('API Endpoint'),
       '#description' => $this->t('Enter the URL for the chatbot API endpoint.'),
-      '#default_value' => $config->get('api_endpoint') ?: '/api/chatbot',
+      '#default_value' => $config->get('api_endpoint'),
       '#required' => TRUE,
     ];
 
@@ -30,7 +30,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('API Key'),
       '#description' => $this->t('Enter the API key for the chatbot service.'),
-      '#default_value' => $config->get('api_key') ?: 'default-api-key',
+      '#default_value' => $config->get('api_key'),
       '#required' => TRUE,
     ];
 
@@ -38,7 +38,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('User Email Field'),
       '#description' => $this->t('Enter the machine name of the field containing the public email (e.g., field_public_email).'),
-      '#default_value' => $config->get('user_email_field') ?: 'field_public_email',
+      '#default_value' => $config->get('user_email_field'),
       '#required' => TRUE,
     ];
 
@@ -46,7 +46,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Chatbot Title'),
       '#description' => $this->t('Enter the title for the chatbot widget.'),
-      '#default_value' => $config->get('chatbot_title') ?: 'Chatbot',
+      '#default_value' => $config->get('chatbot_title'),
       '#required' => TRUE,
     ];
 
@@ -54,7 +54,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#type' => 'number',
       '#title' => $this->t('Chatbot Width'),
       '#description' => $this->t('Enter the width of the chatbot widget in pixels.'),
-      '#default_value' => $config->get('chatbot_width') ?: 950,
+      '#default_value' => $config->get('chatbot_width'),
       '#required' => TRUE,
       '#min' => 300,
       '#max' => 1200,
@@ -64,7 +64,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#type' => 'number',
       '#title' => $this->t('Chatbot Height'),
       '#description' => $this->t('Enter the height of the chatbot widget in pixels.'),
-      '#default_value' => $config->get('chatbot_height') ?: 500,
+      '#default_value' => $config->get('chatbot_height'),
       '#required' => TRUE,
       '#min' => 300,
       '#max' => 800,
@@ -74,7 +74,7 @@ class ChatbotWidgetSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Feedback URI'),
       '#description' => $this->t('Enter the URI for submitting feedback.'),
-      '#default_value' => $config->get('feedback_uri') ?: '/api/chatbot/feedback',
+      '#default_value' => $config->get('feedback_uri'),
       '#required' => TRUE,
     ];
 

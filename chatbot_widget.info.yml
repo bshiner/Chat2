@@ -5,3 +5,6 @@ package: Custom
 core_version_requirement: ^10
 dependencies:
   - drupal:block
+config_devel:
+  install:
+    - chatbot_widget.settings

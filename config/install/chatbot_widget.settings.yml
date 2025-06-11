@@ -1,0 +1,9 @@
+api_endpoint: 'https://api.example.com/chatbot'
+api_key: 'default-api-key'
+user_email_field: 'field_public_email'
+chatbot_title: 'Chatbot'
+chatbot_width: 950
+chatbot_height: 500
+feedback_uri: 'https://api.example.com/chatbot/feedback'
+disclaimer_text: 'Welcome! This is an AI-powered chatbot. While it strives to provide helpful information, please note that its responses may not always be accurate or complete. For critical matters, consult with appropriate professionals.'
+enable_logging: false

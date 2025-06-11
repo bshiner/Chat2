@@ -27,10 +27,10 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
 
   public function handleRequest(Request $request) {
     $config = $this->config('chatbot_widget.settings');
-    $current_user = \Drupal::currentUser();
-    $user = \Drupal\user\Entity\User::load($current_user->id());
     $apiEndpoint = $config->get('api_endpoint');
     $apiKey = $config->get('api_key');
+    $current_user = \Drupal::currentUser();
+    $user = \Drupal\user\Entity\User::load($current_user->id());
     $email_field = $config->get('user_email_field') ?: 'field_public_email';
     $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
 
