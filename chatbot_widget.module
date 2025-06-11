@@ -42,8 +42,9 @@ function chatbot_widget_page_attachments(array &$attachments) {
   $attachments['#attached']['drupalSettings']['chatbotWidget'] = [
     'userEmail' => $user_email,
     'chatbotTitle' => $config->get('chatbot_title') ?: 'Chatbot',
-    'chatbotWidth' => $config->get('chatbot_width') ?: 950,
-    'chatbotHeight' => $config->get('chatbot_height') ?: 500,
+    'chatbotWidth' => $config->get('chatbot_width') ?: 1050,
+    'chatbotHeight' => $config->get('chatbot_height') ?: 600,
     'feedbackUri' => $config->get('feedback_uri') ?: '/api/chatbot/feedback',
+    'disclaimerText' => $config->get('disclaimer_text') ?: 'Welcome! This is an AI-powered chatbot. While it strives to provide helpful information, please note that its responses may not always be accurate or complete. For critical matters, consult with appropriate professionals.',
   ];
 }
