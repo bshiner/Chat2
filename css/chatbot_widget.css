@@ -196,14 +196,13 @@
   font-size: 0.9em;
 }
 
-.citations-toggle {
-  color: #007bff;
-  cursor: pointer;
-  text-decoration: underline;
+.citations-container h4 {
+  margin: 0 0 5px 0;
+  font-size: 1em;
 }
 
 .citations-list {
-  margin-top: 5px;
+  margin: 0;
   padding-left: 20px;
 }
 

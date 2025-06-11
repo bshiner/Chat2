@@ -89,6 +89,21 @@
             $messageContent.text(text);
           }
           
+          $message.append($messageContent);
+
+          if (citations.length > 0) {
+            const $citationsContainer = $('<div>').addClass('citations-container');
+            const $citationsList = $('<ol>').addClass('citations-list');
+
+            citations.forEach(function(citation) {
+              $citationsList.append($('<li>').text(citation.text));
+            });
+
+            $citationsContainer.append($('<h4>').text('Citations:'));
+            $citationsContainer.append($citationsList);
+            $message.append($citationsContainer);
+          }
+
           const $messageFooter = $('<div>').addClass('message-footer');
           const $messageTimestamp = $('<span>').addClass('message-timestamp').text(timestamp);
           
@@ -104,29 +119,9 @@
 
             $thumbsUp.on('click', function() { submitFeedback('up', $message); });
             $thumbsDown.on('click', function() { submitFeedback('down', $message); });
-
-            if (citations.length > 0) {
-              const $citationsContainer = $('<div>').addClass('citations-container');
-              const $citationsToggle = $('<span>').addClass('citations-toggle').text('Show Citations');
-              const $citationsList = $('<ol>').addClass('citations-list').hide();
-
-              citations.forEach(function(citation) {
-                $citationsList.append($('<li>').text(citation.text));
-              });
-
-              $citationsToggle.on('click', function() {
-                $citationsList.toggle();
-                $(this).text(function(i, text) {
-                  return text === "Show Citations" ? "Hide Citations" : "Show Citations";
-                });
-              });
-
-              $citationsContainer.append($citationsToggle).append($citationsList);
-              $messageFooter.append($citationsContainer);
-            }
           }
 
-          $message.append($messageContent).append($messageFooter);
+          $message.append($messageFooter);
           $messages.append($message);
           $messages.scrollTop($messages[0].scrollHeight);
         }
