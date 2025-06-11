@@ -39,6 +39,8 @@ function chatbot_widget_page_attachments(array &$attachments) {
   $email_field = $config->get('user_email_field') ?: 'field_public_email';
   $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
 
+  $chat_session_id = uniqid($user->get('uid')->value ?: '0000');
+
   $attachments['#attached']['drupalSettings']['chatbotWidget'] = [
     'userEmail' => $user_email,
     'chatbotTitle' => $config->get('chatbot_title') ?: 'Chatbot',
@@ -46,5 +48,6 @@ function chatbot_widget_page_attachments(array &$attachments) {
     'chatbotHeight' => $config->get('chatbot_height') ?: 600,
     'feedbackUri' => $config->get('feedback_uri') ?: '/api/chatbot/feedback',
     'disclaimerText' => $config->get('disclaimer_text') ?: 'Welcome! This is an AI-powered chatbot. While it strives to provide helpful information, please note that its responses may not always be accurate or complete. For critical matters, consult with appropriate professionals.',
+    'chatSessionId' => $chat_session_id,
   ];
 }

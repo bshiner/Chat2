@@ -152,7 +152,8 @@
 
         // Helper function to generate a session ID
         function generateSessionId() {
-          return 'session_' + Math.random().toString(36).substr(2, 9);
+          //return 'session_' + Math.random().toString(36).substr(2, 9);
+          return settings.chatbotWidget.chatSessionId || 'sesion0000';
         }
 
         function showLoadingIndicator() {
