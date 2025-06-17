@@ -101,6 +101,10 @@
   align-items: flex-start;
 }
 
+.disclaimer-message {
+  align-items: center;
+}
+
 .message-content {
   padding: 8px 12px;
   border-radius: 12px;
@@ -116,6 +120,11 @@
   background-color: #f1f1f1;
   color: black;
   padding: 10px 15px;
+}
+
+.disclaimer-message .message-content {
+  background-color: #e2e2e2;
+  color: black;
 }
 
 .message-timestamp {
