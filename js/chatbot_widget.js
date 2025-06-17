@@ -104,12 +104,8 @@
             $messageContent.append($citationsContainer);
           }
 
-          // don't show timestamps for disclaimer messages
-          if (sender !== 'disclaimer') {
-            const $messageFooter = $('<div>').addClass('message-footer');
-            const $messageTimestamp = $('<span>').addClass('message-timestamp').text(timestamp);
-          }
-
+          const $messageFooter = $('<div>').addClass('message-footer');
+          const $messageTimestamp = $('<span>').addClass('message-timestamp').text(timestamp);
           $messageFooter.append($messageTimestamp);
 
           if (sender === 'bot') {
@@ -124,7 +120,10 @@
             $thumbsDown.on('click', function() { submitFeedback('down', $message); });
           }
 
-          $message.append($messageFooter);
+          // don't show timestamps for disclaimer messages
+          if (sender !== 'disclaimer') {
+            $message.append($messageFooter);
+          }
           $messages.append($message);
           $messages.scrollTop($messages[0].scrollHeight);
         }
