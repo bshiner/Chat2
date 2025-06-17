@@ -132,9 +132,21 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
     $formattedLines = [];
     $inList = false;
     $inCodeBlock = false;
+    $prevBlank = false;
 
     foreach ($lines as $line) {
       $trimmedLine = trim($line);
+
+      //handle double new lines aka line breaks
+      if (strlen($trimmedLine) == 0) {
+        if ($prevBlank) {
+          $formattedLines[] = '<br/>';
+          $prevBlank = false;
+        }
+        else {
+          $prevBlank = true;
+        }
+      }
 
       // Handle code blocks
       if (strpos($trimmedLine, '```') === 0) {
@@ -176,6 +188,10 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
 
     if ($inCodeBlock) {
       $formattedLines[] = '</code></pre>';
+    }
+
+    if ($config->get('enable_logging')) {
+      $this->loggerFactory->get('chatbot_widget')->info('Formatted Message: @msg', ['@msg' => json_encode(implode("\n", $formattedLines))]);
     }
 
     return implode("\n", $formattedLines);
