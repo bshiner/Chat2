@@ -183,10 +183,6 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
       $formattedLines[] = '</code></pre>';
     }
 
-    if ($config->get('enable_logging')) {
-      $this->loggerFactory->get('chatbot_widget')->info('Formatted Message: @msg', ['@msg' => json_encode(implode("\n", $formattedLines))]);
-    }
-
     return implode("\n", $formattedLines);
   }
 
