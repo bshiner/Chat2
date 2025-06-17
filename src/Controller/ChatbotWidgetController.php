@@ -132,20 +132,13 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
     $formattedLines = [];
     $inList = false;
     $inCodeBlock = false;
-    $prevBlank = false;
 
     foreach ($lines as $line) {
       $trimmedLine = trim($line);
 
-      //handle double new lines aka line breaks
+      //handle empty lines aka line breaks
       if (strlen($trimmedLine) == 0) {
-        if ($prevBlank) {
-          $formattedLines[] = '<br/>';
-          $prevBlank = false;
-        }
-        else {
-          $prevBlank = true;
-        }
+        $formattedLines[] = '<br/>';
       }
 
       // Handle code blocks
