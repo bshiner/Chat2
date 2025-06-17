@@ -27,6 +27,9 @@
         // Toggle chat container visibility
         $button.on('click', function () {
           $container.toggle();
+          if ($container.is(':visible')) {
+            $input.focus();
+          }
         });
 
         // Close chat container
