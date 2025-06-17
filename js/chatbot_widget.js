@@ -121,10 +121,15 @@
             $thumbsDown.on('click', function() { submitFeedback('down', $message); });
           }
 
+          //append debug info to the chat temporarily
+          const $messageDebug = $('<span>').addClass('message-timestamp').text(timestamp);
+          $messageFooter.append($messageTimestamp);
+
           // don't show timestamps for disclaimer messages
           if (sender !== 'disclaimer') {
             $message.append($messageFooter);
           }
+
           $messages.append($message);
           $messages.scrollTop($messages[0].scrollHeight);
         }
