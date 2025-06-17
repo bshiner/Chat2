@@ -31,8 +31,7 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
     $apiKey = $config->get('api_key');
     $current_user = \Drupal::currentUser();
     $user = \Drupal\user\Entity\User::load($current_user->id());
-    $email_field = $config->get('user_email_field') ?: 'field_public_email';
-    $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
+    $user_email = $user->hasField('field_public_email') ? $user->get('field_public_email')->value : '';
 
     $content = json_decode($request->getContent(), true);
     $message = $content['message'] ?? '';
@@ -92,9 +91,7 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
       $this->loggerFactory->get('chatbot_widget')->info('Feedback request: @request', ['@request' => json_encode($content)]);
     }
 
-    $email_field = $config->get('user_email_field') ?: 'field_public_email';
-    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-    $user_email = $user->hasField($email_field) ? $user->get($email_field)->value : '';
+    $user_email = $user->hasField('field_public_email') ? $user->get('field_public_email')->value : '';
 
     $client = \Drupal::httpClient();
 

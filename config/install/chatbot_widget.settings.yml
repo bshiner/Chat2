@@ -1,6 +1,5 @@
 api_endpoint: 'https://api.example.com/chatbot'
 api_key: 'default-api-key'
-user_email_field: 'field_public_email'
 chatbot_title: 'Chatbot'
 chatbot_width: 950
 chatbot_height: 500
