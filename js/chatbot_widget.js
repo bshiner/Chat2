@@ -123,7 +123,7 @@
 
           //append debug info to the chat temporarily
           const $messageDebug = $('<span>').addClass('message-timestamp').text(timestamp);
-          $messageFooter.append($messageTimestamp);
+          $messageFooter.append($messageDebug);
 
           // don't show timestamps for disclaimer messages
           if (sender !== 'disclaimer') {
