@@ -97,7 +97,7 @@
 
             $citationsContainer.append($('<h4>').text('Citations:'));
             citations.forEach(function(citation) {
-              $citationsList.append($('<li>').html('<a href="' + citation + '" target="_blank">' + citation + '</a>));
+              $citationsList.append($('<li>').html('<a href="' + citation + '" target="_blank">' + citation + '</a>'));
             });
 
             $citationsContainer.append($citationsList);
