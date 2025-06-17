@@ -97,9 +97,9 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
     $client = \Drupal::httpClient();
 
     try {
-      $response = $client->post($apiEndpoint . '/feedback', [
+      $response = $client->post($apiEndpoint, [
         'json' => [
-          'sessionId' => '12345',
+          'sessionId' => $content['sessionId'] ?? '00000',
           'rating' => $content['rating'] ?? 'up',
         ],
         'headers' => [
