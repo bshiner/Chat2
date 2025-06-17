@@ -85,14 +85,15 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
     $config = $this->config('chatbot_widget.settings');
     $apiEndpoint = $config->get('feedback_uri');
     $apiKey = $config->get('api_key');
+    $current_user = \Drupal::currentUser();
+    $user = \Drupal\user\Entity\User::load($current_user->id());
+    $user_email = $user->hasField('field_public_email') ? $user->get('field_public_email')->value : '';
 
     $content = json_decode($request->getContent(), true);
 
     if ($config->get('enable_logging')) {
       $this->loggerFactory->get('chatbot_widget')->info('Feedback request: @request', ['@request' => json_encode($content)]);
     }
-
-    $user_email = $user->hasField('field_public_email') ? $user->get('field_public_email')->value : '';
 
     $client = \Drupal::httpClient();
 
