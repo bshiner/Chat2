@@ -65,16 +65,6 @@ class ChatbotWidgetBlock extends BlockBase implements ContainerFactoryPluginInte
         'library' => [
           'chatbot_widget/chatbot_widget',
         ],
-        'drupalSettings' => [
-          'chatbotWidget' => [
-            'chatbotWidth' => $config->get('chatbot_width'),
-            'chatbotHeight' => $config->get('chatbot_height'),
-            'chatbotTitle' => $config->get('chatbot_title'),
-            'apiEndpoint' => $config->get('api_endpoint'),
-            'feedbackUri' => $config->get('feedback_uri'),
-            'disclaimerText' => $config->get('disclaimer_text') ?: 'Welcome! This is an AI-powered chatbot. While it strives to provide helpful information, please note that its responses may not always be accurate or complete. For critical matters, consult with appropriate professionals.',
-          ],
-        ],
       ],
     ];
   }
