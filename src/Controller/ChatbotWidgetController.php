@@ -131,21 +131,42 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
     $lines = explode("\n", $message);
     $formattedLines = [];
     $inList = false;
+    $inCodeBlock = false;
 
     foreach ($lines as $line) {
       $trimmedLine = trim($line);
+
+      // Handle code blocks
+      if (strpos($trimmedLine, '```') === 0) {
+        if ($inCodeBlock) {
+          $formattedLines[] = '</code></pre>';
+          $inCodeBlock = false;
+        } else {
+          $formattedLines[] = '<pre><code>';
+          $inCodeBlock = true;
+        }
+        continue;
+      }
+
+      if ($inCodeBlock) {
+        $formattedLines[] = htmlspecialchars($line);
+        continue;
+      }
+
+      // Handle lists
       if (strpos($trimmedLine, '- ') === 0) {
         if (!$inList) {
           $formattedLines[] = '<ul>';
           $inList = true;
         }
-        $formattedLines[] = '<li>' . htmlspecialchars(substr($trimmedLine, 2)) . '</li>';
+        $listItem = substr($trimmedLine, 2);
+        $formattedLines[] = '<li>' . $this->formatInline($listItem) . '</li>';
       } else {
         if ($inList) {
           $formattedLines[] = '</ul>';
           $inList = false;
         }
-        $formattedLines[] = htmlspecialchars($trimmedLine);
+        $formattedLines[] = $this->formatInline($trimmedLine);
       }
     }
 
@@ -153,6 +174,26 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
       $formattedLines[] = '</ul>';
     }
 
-    return implode($formattedLines);
+    if ($inCodeBlock) {
+      $formattedLines[] = '</code></pre>';
+    }
+
+    return implode("\n", $formattedLines);
+  }
+
+  private function formatInline($text) {
+    // Convert inline code
+    $text = preg_replace('/`([^`]+)`/', '<code>$1</code>', $text);
+
+    // Convert bold
+    $text = preg_replace('/\*\*([^\*]+)\*\*/', '<strong>$1</strong>', $text);
+
+    // Convert italic
+    $text = preg_replace('/\*([^\*]+)\*/', '<em>$1</em>', $text);
+
+    // Convert links
+    $text = preg_replace('/\[([^\]]+)\]\(([^\)]+)\)/', '<a href="$2">$1</a>', $text);
+
+    return $text;
   }
 }
