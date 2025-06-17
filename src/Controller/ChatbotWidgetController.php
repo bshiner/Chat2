@@ -35,6 +35,7 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
 
     $content = json_decode($request->getContent(), true);
     $message = $content['message'] ?? '';
+    $sessionId = $content['sessionId'] ?? '00000';
 
     if ($config->get('enable_logging')) {
       $this->loggerFactory->get('chatbot_widget')->info('Request to API: @request', ['@request' => json_encode($content)]);
@@ -46,7 +47,7 @@ class ChatbotWidgetController extends ControllerBase implements ContainerInjecti
       $response = $client->post($apiEndpoint, [
         'json' => [
           'prompt' => $message,
-          'sessionId' => '12345',
+          'sessionId' => $sessionId,
           // Add any other fields you want to send to the API
         ],
         'headers' => [

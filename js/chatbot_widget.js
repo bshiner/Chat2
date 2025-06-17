@@ -45,7 +45,8 @@
 
             // Prepare the payload
             const payload = {
-              message: message
+              message: message,
+              sessionId: sessionId
             };
 
             // Send message to our module's endpoint
